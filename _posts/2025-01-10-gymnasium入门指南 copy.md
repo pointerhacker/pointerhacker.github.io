@@ -29,7 +29,7 @@ env = gym.make('CartPole-v1')
 
 在强化学习中，下图所示的经典“代理-环境循环”是主体和环境如何相互作用的简化表示。代理接收对环境的观察，然后选择一个操作，环境使用该操作来确定奖励和下一个观察。然后循环重复，直到环境结束（终止）。
 
-<img src="/http://pointerhacker.github.io/imgs/posts/gymnasium/AE_loop.png" alt="../../_images/AE_loop.png" style="zoom:8%;" />
+<img src="http://pointerhacker.github.io/imgs/posts/gymnasium/AE_loop.png" alt="../../_images/AE_loop.png" style="zoom:8%;" />
 
 Show me in code 看看智能体和环境的交互过程
 
@@ -74,7 +74,7 @@ env.close()
 
 输出类似这样
 
-<img src="/http://pointerhacker.github.io/imgs/posts/gymnasium/153222406-af5ce6f0-4696-4a24-a683-46ad4939170c.gif" alt="https://user-images.githubusercontent.com/15806078/153222406-af5ce6f0-4696-4a24-a683-46ad4939170c.gif" style="zoom:25%;" />
+<img src="http://pointerhacker.github.io/imgs/posts/gymnasium/153222406-af5ce6f0-4696-4a24-a683-46ad4939170c.gif" alt="https://user-images.githubusercontent.com/15806078/153222406-af5ce6f0-4696-4a24-a683-46ad4939170c.gif" style="zoom:25%;" />
 
 首先，使用[`make()`](https://gymnasium.farama.org/api/registry/#gymnasium.make)创建一个环境，并附加一个关键字`"render_mode"` ，指定如何可视化环境。有关不同渲染模式的默认含义的详细信息，请参阅[`Env.render()`](https://gymnasium.farama.org/api/env/#gymnasium.Env.render) 在此示例中，我们使用`"LunarLander"`环境，其中代理控制需要安全着陆的宇宙飞船。初始化环境后，我们[`Env.reset()`](https://gymnasium.farama.org/api/env/#gymnasium.Env.reset)环境以获得对环境的第一次观察以及附加信息。要使用特定的随机种子或选项初始化环境（请参阅环境文档以了解可能的值），请使用带有`reset()` `seed`或`options`参数。由于我们希望继续代理-环境循环，直到环境结束（时间步数未知），因此我们将`done`定义为一个变量，以了解何时停止与环境交互以及使用它的 while 循环。接下来，代理在环境中执行操作， [`Env.step()`](https://gymnasium.farama.org/api/env/#gymnasium.Env.step)执行所选操作（在本例中是随机的`env.action_space.sample()` ）以更新环境。这个动作可以想象为移动机器人或按下游戏控制器上的按钮，从而导致环境发生变化。结果，代理从更新的环境中收到新的观察结果以及采取行动的奖励。例如，这种奖励可能对消灭敌人是积极的，或者对进入熔岩是消极的奖励。一种这样的动作-观察交换被称为**timestep【时间步】**。然而，经过一些时间步长后，环境可能会结束，这称为最终状态。例如，机器人可能已经崩溃，或者可能已经成功完成任务，环境将需要停止，因为代理无法继续。在 Gymnasium 中，如果环境已终止，则由`step()`返回作为第三个变量`terminated` 。同样，我们可能还希望环境在固定数量的时间步后结束，在这种情况下，环境会发出截断的信号。如果`terminated`或`truncated`为`True`那么我们结束这一集，但在大多数情况下，用户可能希望重新启动环境，这可以通过`env.reset()`来完成。
 
@@ -312,9 +312,9 @@ plt.show()
 
 ### 可视化策略
 
-![img](/http://pointerhacker.github.io/imgs/posts/gymnasium/blackjack_with_usable_ace.png)
+![img](http://pointerhacker.github.io/imgs/posts/gymnasium/blackjack_with_usable_ace.png)
 
-![img](/http://pointerhacker.github.io/imgs/posts/gymnasium/blackjack_without_usable_ace.png)
+![img](http://pointerhacker.github.io/imgs/posts/gymnasium/blackjack_without_usable_ace.png)
 
 
 
