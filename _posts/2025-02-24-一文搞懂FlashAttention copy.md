@@ -95,7 +95,7 @@ $$\begin{aligned} d'_i = \sum_{j=1}^i e^{x_j-m_i} \\ = \left(\sum_{j=1}^{i-1} e^
 
 ### Algorithm 2-pass online softmax
 
-for $i \leftarrow 1,N$ do
+for $$i \leftarrow 1,N$$ do
 
 ​	 $$m_i \leftarrow \max(m_{i-1}, x_i)$$ 
 
@@ -103,7 +103,7 @@ for $i \leftarrow 1,N$ do
 
 end
 
-for $i \leftarrow 1,N$ do
+for $$i \leftarrow 1,N$$ do
 
 ​	 $$a_i \leftarrow \frac{e^{x_i-m_N}}{d_N'}$$ 
 
@@ -125,7 +125,7 @@ Algorithm Multi-pass Self-Attention
 - $$V[i,:]$$：表示 $$V$$ 矩阵的第 $$i$$ 行
 - $$\{o_i\}: \sum_{j = 1} a_jV[j,:]$$，一个存储部分聚合结果 $$A[k,:i] \times V[i,:]$$ 的行向量
 
-for $i \leftarrow 1,N$ do
+for $$i \leftarrow 1,N$$ do
 $$
 \begin{align*}
 x_i &\leftarrow Q[k,:]K^T[:,i]\\
@@ -136,7 +136,7 @@ $$
 
 End
 
-for $i \leftarrow 1,N$ do
+for $$i \leftarrow 1,N$$ do
 $$
 \begin{align}
 a_i &\leftarrow \frac{e^{x_i - m_N}}{d_N'}\tag{11}\\
@@ -173,7 +173,7 @@ $$
 
 这仅依赖于$$d_i^{'}$$,$$d_{i-1}^{'}$$,$$m_i$$,$$m_{i-1}$$和$$x_i$$，因此我们可以将自注意力中的所有计算融合到一个循环中：
 
-for $i \leftarrow 1,N$ do
+for $$i \leftarrow 1,N$$ do
 
    - $$x_{i} \leftarrow Q[k,:]K^{T}[:,i]$$
    - $$m_{i} \leftarrow \max(m_{i - 1},x_{i})$$
@@ -200,7 +200,7 @@ end
 
 
 
-for $i \leftarrow 1,N$ do
+for $$i \leftarrow 1,N$$ do
 
 - $$\boldsymbol{x}_{i} \leftarrow Q[k,:]K^{T}[:, (i - 1)b:ib]$$
 - $$m_{i}^{(\text{local})}=\max_{j = 1}^{b}(\boldsymbol{x}_{i}[j])$$
