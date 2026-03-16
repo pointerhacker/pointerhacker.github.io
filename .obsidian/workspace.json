@@ -13,8 +13,22 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "_posts/2026-03-16-主动提交测试.md",
+                "file": "_posts/2026-03-16-主动提交测试 1.md",
                 "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2026-03-16-主动提交测试 1"
+            }
+          },
+          {
+            "id": "3979cf93a58367aa",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "_posts/2026-03-16-主动提交测试.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -94,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "_posts/2026-03-16-主动提交测试.md",
+                "file": "_posts/2026-03-16-主动提交测试 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +118,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "2026-03-16-主动提交测试 的反向链接列表"
+              "title": "2026-03-16-主动提交测试 1 的反向链接列表"
             }
           },
           {
@@ -113,12 +127,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "_posts/2026-03-16-主动提交测试.md",
+                "file": "_posts/2026-03-16-主动提交测试 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "2026-03-16-主动提交测试 的出链列表"
+              "title": "2026-03-16-主动提交测试 1 的出链列表"
             }
           },
           {
@@ -156,21 +170,33 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "_posts/2026-03-16-主动提交测试.md",
+                "file": "_posts/2026-03-16-主动提交测试 1.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "2026-03-16-主动提交测试 的大纲"
+              "title": "2026-03-16-主动提交测试 1 的大纲"
+            }
+          },
+          {
+            "id": "6128c0b005387087",
+            "type": "leaf",
+            "state": {
+              "type": "file-properties",
+              "state": {
+                "file": "_posts/2026-03-16-主动提交测试 1.md"
+              },
+              "icon": "lucide-info",
+              "title": "2026-03-16-主动提交测试 1的笔记属性"
             }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -186,8 +212,11 @@
   },
   "active": "bd60bd9cb288344d",
   "lastOpenFiles": [
-    "_posts/2025-03-19-MOE详解.md",
+    "_posts/2026-03-16-主动提交测试2.md",
+    "_posts/2026-03-16-主动提交测试 1.md",
     "_posts/2026-03-16-主动提交测试.md",
+    "_posts/2025-02-5-一文搞懂ELO.md",
+    "_posts/2025-03-19-MOE详解.md",
     "_posts/2024-01-08-每日一题.md",
     "_posts/2025-01-10-gymnasium入门指南 copy.md",
     "未命名.canvas"
