@@ -1,0 +1,27 @@
+---
+layout: null
+---
+[
+{% for post in site.posts %}
+  {
+    "title"    : {{ post.title | jsonify }},
+    "category" : {{ post.category | jsonify }},
+    "tags"     : {{ post.tags | join: ', ' | jsonify }},
+    "url"      : {{ post.url | jsonify }},
+    "date"     : {{ post.date | date: "%Y-%m-%d" | jsonify }},
+    "content"  : {{ post.content | strip_html | strip_newlines | jsonify }}
+  } {% unless forloop.last %},{% endunless %}
+{% endfor %}
+{% for page in site.pages %}
+  {% if page.title and page.content and page.url != '/search.html' %}
+  ,{
+    "title"    : {{ page.title | jsonify }},
+    "category" : {{ page.category | jsonify }},
+    "tags"     : {{ page.tags | join: ', ' | jsonify }},
+    "url"      : {{ page.url | jsonify }},
+    "date"     : "",
+    "content"  : {{ page.content | strip_html | strip_newlines | jsonify }}
+  }
+  {% endif %}
+{% endfor %}
+]
