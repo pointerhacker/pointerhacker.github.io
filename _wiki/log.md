@@ -24,6 +24,14 @@ updated: 2026-04-09
 
 ---
 
+## [2026-04-09] ingest | Claude Managed Agents
+
+- 新增实体页：`_wiki/entities/claude-managed-agents.md`
+- 来源：微信公众号「金色传说大聪明」，解析 Anthropic 2026-04-08 发布的 Managed Agents 平台
+- 覆盖内容：三层虚拟化架构（Session/Harness/Sandbox）、从宠物到牲畜的设计演进、定价模型、早期用户案例
+
+---
+
 ## 待补充条目
 
 以下是规划中但尚未创建的条目（stub list）：
