@@ -6,7 +6,7 @@ category: wiki
 nav_exclude: true
 tags: [llm, overview, index]
 description: LLM 知识库的概览和使用指南
-related: [openviking, hierarchical-context-loading, recursive-directory-retrieval]
+related: [openviking]
 updated: 2026-04-09
 ---
 
@@ -26,22 +26,22 @@ updated: 2026-04-09
 
 ## 分类体系
 
-- **concepts/** — 概念页（注意力机制、RoPE、KV Cache 等）
+- **concepts/** — 概念页（仅限跨实体可复用的独立概念）
 - **entities/** — 实体页（模型、论文、人物、机构等）
 - **sources/** — 原始资料摘要
+
+> **聚合原则：** 如果一个概念仅在某一个实体的上下文中才有意义，就作为该实体页的一个章节展开，**不单独建 concept 条目**。
 
 ## 索引
 
 ### 实体（Entities）
 
-- [[entities/openviking|OpenViking]] — 字节火山引擎开源的 AI Agent 上下文管理框架
+- [[entities/openviking|OpenViking]] — 字节火山引擎开源的 AI Agent 上下文管理框架（文件系统范式 + 分层上下文加载 + 目录递归检索）
 - [[entities/claude-managed-agents|Claude Managed Agents]] — Anthropic 2026-04-08 发布的 Agent 托管平台
 - [[entities/gpt|GPT 系列]] — OpenAI GPT 模型系列
 
 ### 概念（Concepts）
 
-- [[concepts/hierarchical-context-loading|分层上下文加载]] — LLM 上下文分层管理 L0/L1/L2 范式
-- [[concepts/recursive-directory-retrieval|目录递归检索]] — 改进 RAG 的五步递归检索策略
 - [[concepts/attention-mechanism|注意力机制]] — Transformer 的核心机制
 - [[concepts/flash-attention|Flash Attention]] — 高效注意力计算实现
 - [[concepts/kv-cache|KV Cache]] — LLM 推理优化的关键技术

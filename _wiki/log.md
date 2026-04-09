@@ -18,10 +18,8 @@ updated: 2026-04-09
 
 ## [2026-04-09] ingest | OpenViking（字节火山引擎开源项目）
 
-- 新建: `entities/openviking.md`
-- 新建: `concepts/hierarchical-context-loading.md`
-- 新建: `concepts/recursive-directory-retrieval.md`
-- 更新: `index.md` 追加 OpenViking 相关条目
+- 新建: `entities/openviking.md`（合并所有子概念，不再拆分独立 concept 条目）
+- 更新: `index.md` 追加 OpenViking 条目
 - 来源: 微信公众号文章（OpenViking 介绍）
 
 ---
