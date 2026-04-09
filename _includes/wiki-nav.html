@@ -1,0 +1,142 @@
+{% assign all_wiki = site.wiki | sort: "title" | where_exp: "p", "p.nav_exclude != true" %}
+{% assign concepts = all_wiki | where: "wiki_type", "concepts" %}
+{% assign entities = all_wiki | where: "wiki_type", "entities" %}
+{% assign sources  = all_wiki | where: "wiki_type", "sources"  %}
+
+<div class="wiki-sidebar-header">
+  <button class="wiki-toggle-btn" id="wikiToggleBtn" title="折叠/展开导航">☰</button>
+  <a href="/wiki/">知识库</a>
+</div>
+
+<div class="wiki-sidebar-search">
+  <input type="text" id="wiki-sidebar-search" placeholder="快速搜索..." autocomplete="off">
+</div>
+
+<nav class="wiki-nav-content">
+
+  {% if concepts.size > 0 %}
+  <div class="wiki-nav-section">
+    <div class="wiki-nav-group-title open" data-group="concepts">
+      <span>概念 <small style="color:#ccc;font-weight:400;">({{ concepts.size }})</small></span>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <ul class="wiki-nav-group-list" id="group-concepts">
+      {% for p in concepts %}
+      <li><a href="{{ p.url }}" {% if page.url == p.url %}class="active"{% endif %} title="{{ p.description }}">{{ p.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if entities.size > 0 %}
+  <div class="wiki-nav-section">
+    <div class="wiki-nav-group-title open" data-group="entities">
+      <span>实体 <small style="color:#ccc;font-weight:400;">({{ entities.size }})</small></span>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <ul class="wiki-nav-group-list" id="group-entities">
+      {% for p in entities %}
+      <li><a href="{{ p.url }}" {% if page.url == p.url %}class="active"{% endif %} title="{{ p.description }}">{{ p.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if sources.size > 0 %}
+  <div class="wiki-nav-section">
+    <div class="wiki-nav-group-title open" data-group="sources">
+      <span>资料 <small style="color:#ccc;font-weight:400;">({{ sources.size }})</small></span>
+      <span class="toggle-icon">▶</span>
+    </div>
+    <ul class="wiki-nav-group-list" id="group-sources">
+      {% for p in sources %}
+      <li><a href="{{ p.url }}" {% if page.url == p.url %}class="active"{% endif %} title="{{ p.description }}">{{ p.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+</nav>
+
+<script>
+(function() {
+  // Group collapse toggle
+  document.querySelectorAll('.wiki-nav-group-title').forEach(function(title) {
+    title.addEventListener('click', function() {
+      var groupId = 'group-' + this.getAttribute('data-group');
+      var list = document.getElementById(groupId);
+      if (!list) return;
+      var isOpen = this.classList.contains('open');
+      if (isOpen) {
+        this.classList.remove('open');
+        list.classList.add('closed');
+      } else {
+        this.classList.add('open');
+        list.classList.remove('closed');
+      }
+    });
+  });
+
+  // Sidebar toggle
+  var toggleBtn = document.getElementById('wikiToggleBtn');
+  var sidebar = document.querySelector('.wiki-sidebar');
+  var floatBtn = document.getElementById('wikiToggleFloat');
+  var overlay = document.getElementById('wikiMobileOverlay');
+
+  function isMobile() {
+    return window.innerWidth <= 860;
+  }
+
+  if (toggleBtn && sidebar) {
+    toggleBtn.addEventListener('click', function() {
+      if (isMobile()) {
+        sidebar.classList.toggle('mobile-open');
+        if (overlay) overlay.classList.toggle('active');
+      } else {
+        sidebar.classList.toggle('collapsed');
+        if (floatBtn) floatBtn.style.display = sidebar.classList.contains('collapsed') ? 'block' : 'none';
+      }
+    });
+  }
+
+  if (floatBtn && sidebar) {
+    floatBtn.addEventListener('click', function() {
+      sidebar.classList.remove('collapsed');
+      this.style.display = 'none';
+    });
+  }
+
+  if (overlay && sidebar) {
+    overlay.addEventListener('click', function() {
+      sidebar.classList.remove('mobile-open');
+      this.classList.remove('active');
+    });
+  }
+
+  // Quick sidebar search filter
+  var searchInput = document.getElementById('wiki-sidebar-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      var q = this.value.toLowerCase().trim();
+      document.querySelectorAll('.wiki-nav-group-list a').forEach(function(link) {
+        var match = !q || link.textContent.toLowerCase().includes(q) || (link.title || '').toLowerCase().includes(q);
+        link.parentElement.style.display = match ? '' : 'none';
+      });
+      // Show all groups when filtering
+      if (q) {
+        document.querySelectorAll('.wiki-nav-group-list').forEach(function(list) {
+          list.classList.remove('closed');
+          var title = list.previousElementSibling;
+          if (title) title.classList.add('open');
+        });
+      }
+    });
+  }
+
+  // Scroll active item into view
+  var activeLink = document.querySelector('.wiki-nav-group-list a.active');
+  if (activeLink) {
+    activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+})();
+</script>

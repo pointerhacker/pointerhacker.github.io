@@ -1,0 +1,128 @@
+---
+layout: wiki-index
+title: 知识库
+category: wiki
+---
+
+{% assign all_wiki = site.wiki | where_exp: "p", "p.nav_exclude != true" | sort: "title" %}
+{% assign concepts = all_wiki | where: "wiki_type", "concepts" %}
+{% assign entities = all_wiki | where: "wiki_type", "entities" %}
+{% assign sources  = all_wiki | where: "wiki_type", "sources"  %}
+{% assign total    = all_wiki | size %}
+
+<div class="inner">
+
+  <div class="wiki-index-hero">
+    <h1><i class="fa fa-book"></i> LLM 知识库</h1>
+    <p>基于 Karpathy LLM Wiki 模式构建的个人 LLM 知识库 — 一个持续增长的、由 LLM 协助维护的结构化知识图谱。</p>
+    <div class="wiki-stats">
+      <div class="wiki-stat">
+        <span class="wiki-stat-number">{{ total }}</span>
+        <span class="wiki-stat-label">条目</span>
+      </div>
+      <div class="wiki-stat">
+        <span class="wiki-stat-number">{{ concepts.size }}</span>
+        <span class="wiki-stat-label">概念</span>
+      </div>
+      <div class="wiki-stat">
+        <span class="wiki-stat-number">{{ entities.size }}</span>
+        <span class="wiki-stat-label">实体</span>
+      </div>
+      <div class="wiki-stat">
+        <span class="wiki-stat-number">{{ sources.size }}</span>
+        <span class="wiki-stat-label">资料</span>
+      </div>
+    </div>
+  </div>
+
+  {% assign recent_wiki = all_wiki | sort: "updated" | reverse | limit: 5 %}
+  {% if recent_wiki.size > 0 %}
+  <div class="wiki-recent">
+    <h3><i class="fa fa-clock-o"></i> 最近更新</h3>
+    <ul>
+      {% for p in recent_wiki %}
+      <li>
+        <a href="{{ p.url }}">{{ p.title }}</a>
+        <span class="updated">{{ p.updated | default: p.date | date: "%Y-%m-%d" }}</span>
+        <span class="wiki-badge {{ p.wiki_type }}">{{ p.wiki_type }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if concepts.size > 0 %}
+  <div class="wiki-section">
+    <div class="wiki-section-header">
+      <h2>概念 Concepts</h2>
+      <span class="wiki-section-count">{{ concepts.size }}</span>
+    </div>
+    <div class="wiki-entry-list">
+      {% for p in concepts %}
+      <a class="wiki-entry-card" href="{{ p.url }}">
+        <h3>{{ p.title }}</h3>
+        {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+        <div class="wiki-entry-meta">
+          {% for tag in p.tags limit:4 %}
+            <span class="wiki-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if entities.size > 0 %}
+  <div class="wiki-section">
+    <div class="wiki-section-header">
+      <h2>实体 Entities</h2>
+      <span class="wiki-section-count">{{ entities.size }}</span>
+    </div>
+    <div class="wiki-entry-list">
+      {% for p in entities %}
+      <a class="wiki-entry-card" href="{{ p.url }}">
+        <h3>{{ p.title }}</h3>
+        {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+        <div class="wiki-entry-meta">
+          {% for tag in p.tags limit:4 %}
+            <span class="wiki-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if sources.size > 0 %}
+  <div class="wiki-section">
+    <div class="wiki-section-header">
+      <h2>资料 Sources</h2>
+      <span class="wiki-section-count">{{ sources.size }}</span>
+    </div>
+    <div class="wiki-entry-list">
+      {% for p in sources %}
+      <a class="wiki-entry-card" href="{{ p.url }}">
+        <h3>{{ p.title }}</h3>
+        {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+        <div class="wiki-entry-meta">
+          {% for tag in p.tags limit:4 %}
+            <span class="wiki-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if total == 0 %}
+  <div style="text-align:center;padding:4em;color:#aaa;">
+    <p style="font-size:3em;">📚</p>
+    <p>知识库还是空的。</p>
+    <p style="font-size:0.85rem;">将 Markdown 文件放入 <code>_wiki/concepts/</code>、<code>_wiki/entities/</code> 或 <code>_wiki/sources/</code>，并设置 <code>layout: wiki</code> 即可开始。</p>
+  </div>
+  {% endif %}
+
+</div>

@@ -6,6 +6,7 @@ language: cn
 ---
 <section class="inner">
   <h1>全文搜索</h1>
+  <p style="color:#888;font-size:0.85rem;margin-top:0.3em;">覆盖博客文章与知识库条目</p>
   <div class="search-box">
     <input type="text" id="search-input" placeholder="输入搜索关键词..." autofocus>
     <button id="search-button"><i class="fa fa-search"></i></button>
@@ -28,18 +29,18 @@ language: cn
   outline: none;
 }
 .search-box input:focus {
-  border-color: #666;
+  border-color: #48C9B0;
 }
 .search-box button {
   padding: 10px 20px;
-  background: #333;
+  background: #48C9B0;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 .search-box button:hover {
-  background: #555;
+  background: #3ab89f;
 }
 .search-result {
   margin: 20px 0;
@@ -47,28 +48,60 @@ language: cn
   border-bottom: 1px solid #eee;
 }
 .search-result h3 {
-  margin: 0 0 10px 0;
+  margin: 0 0 6px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 .search-result h3 a {
   color: #333;
   text-decoration: none;
 }
 .search-result h3 a:hover {
+  color: #48C9B0;
   text-decoration: underline;
 }
 .search-result .date {
   color: #999;
-  font-size: 14px;
+  font-size: 13px;
 }
 .search-result .snippet {
   color: #666;
-  margin-top: 10px;
+  margin-top: 8px;
   line-height: 1.6;
+  font-size: 0.88rem;
 }
 .no-results {
   text-align: center;
   color: #999;
   padding: 40px;
+}
+.result-badge {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+.result-badge.blog {
+  background: #fff0f0;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+.result-badge.wiki {
+  background: #e8f8f5;
+  color: #1a9e8a;
+  border: 1px solid #48C9B0;
+}
+mark {
+  background: #fff9c4;
+  padding: 0 2px;
+  border-radius: 2px;
 }
 </style>
 
@@ -82,7 +115,7 @@ function isChinese(char) {
 function tokenize(text) {
   const tokens = [];
   let currentToken = '';
-  
+
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
     if (isChinese(char)) {
@@ -117,7 +150,7 @@ function buildIndex(docs) {
       { text: doc.content, boost: 1 },
       { text: doc.tags || '', boost: 5 }
     ];
-    
+
     fields.forEach(field => {
       const tokens = tokenize(field.text);
       tokens.forEach(token => {
@@ -142,6 +175,14 @@ function initSearch() {
     .then(data => {
       documents = data;
       searchIndex = buildIndex(documents);
+      // Handle URL query param
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get('q');
+      if (q) {
+        document.getElementById('search-input').value = q;
+        const results = performSearch(q);
+        displayResults(results, q);
+      }
     })
     .catch(error => console.error('Error loading search index:', error));
 }
@@ -150,10 +191,10 @@ function performSearch(query) {
   if (!searchIndex || !query.trim()) {
     return [];
   }
-  
+
   const queryTokens = tokenize(query);
   const scores = {};
-  
+
   queryTokens.forEach(token => {
     if (searchIndex[token]) {
       Object.keys(searchIndex[token]).forEach(docIndex => {
@@ -164,10 +205,10 @@ function performSearch(query) {
       });
     }
   });
-  
+
   const sortedDocIndices = Object.keys(scores)
     .sort((a, b) => scores[b] - scores[a]);
-  
+
   return sortedDocIndices.map(docIndex => ({
     ...documents[docIndex],
     score: scores[docIndex]
@@ -177,11 +218,11 @@ function performSearch(query) {
 function highlightText(text, query) {
   if (!query) return text;
   const queryLower = query.toLowerCase();
-  
+
   let keywords = [];
   const englishWords = queryLower.match(/[a-zA-Z]+/g) || [];
   keywords = keywords.concat(englishWords);
-  
+
   for (let i = 0; i < query.length; i++) {
     if (isChinese(query[i])) {
       keywords.push(query[i]);
@@ -190,23 +231,23 @@ function highlightText(text, query) {
       }
     }
   }
-  
+
   keywords = [...new Set(keywords)].sort((a, b) => b.length - a.length);
-  
+
   let result = text;
   keywords.forEach(keyword => {
     if (!keyword) return;
     const regex = new RegExp(`(${keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
     result = result.replace(regex, '<mark>$1</mark>');
   });
-  
+
   return result;
 }
 
 function getSnippet(content, query) {
   const lowerContent = content.toLowerCase();
   let bestPos = -1;
-  
+
   for (let i = 0; i < query.length; i++) {
     const substr = query.substring(Math.max(0, i - 1), i + 2);
     const pos = lowerContent.indexOf(substr.toLowerCase());
@@ -215,7 +256,7 @@ function getSnippet(content, query) {
       break;
     }
   }
-  
+
   if (bestPos === -1) {
     const englishWords = query.match(/[a-zA-Z]+/g) || [];
     for (const word of englishWords) {
@@ -226,32 +267,44 @@ function getSnippet(content, query) {
       }
     }
   }
-  
+
   if (bestPos === -1) {
     return content.substring(0, 200) + '...';
   }
-  
+
   const start = Math.max(0, bestPos - 80);
   const end = Math.min(content.length, bestPos + 120);
   let snippet = content.substring(start, end);
-  
+
   if (start > 0) snippet = '...' + snippet;
   if (end < content.length) snippet += '...';
-  
+
   return snippet;
+}
+
+function getCategoryBadge(category) {
+  if (category === 'wiki') {
+    return '<span class="result-badge wiki">Wiki</span>';
+  } else if (category === 'blog') {
+    return '<span class="result-badge blog">Blog</span>';
+  }
+  return '';
 }
 
 function displayResults(results, query) {
   const container = document.getElementById('search-results');
-  
+
   if (results.length === 0) {
     container.innerHTML = '<div class="no-results">没有找到相关结果</div>';
     return;
   }
-  
+
   container.innerHTML = results.map(result => `
     <div class="search-result">
-      <h3><a href="${result.url}">${highlightText(result.title, query)}</a></h3>
+      <h3>
+        <a href="${result.url}">${highlightText(result.title, query)}</a>
+        ${getCategoryBadge(result.category)}
+      </h3>
       ${result.date ? `<div class="date">${result.date}</div>` : ''}
       <div class="snippet">${highlightText(getSnippet(result.content, query), query)}</div>
     </div>
@@ -260,23 +313,23 @@ function displayResults(results, query) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initSearch();
-  
+
   const searchInput = document.getElementById('search-input');
   const searchButton = document.getElementById('search-button');
-  
+
   const doSearch = () => {
     const query = searchInput.value;
     const results = performSearch(query);
     displayResults(results, query);
   };
-  
+
   searchButton.addEventListener('click', doSearch);
   searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       doSearch();
     }
   });
-  
+
   searchInput.addEventListener('input', () => {
     const query = searchInput.value;
     if (query.length >= 1) {

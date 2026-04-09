@@ -29,3 +29,17 @@ syntax_highlighter: rouge
 # White-listed plugins
 gems:
   - jekyll-sitemap
+
+# Wiki knowledge base collection
+collections:
+  wiki:
+    output: true
+    permalink: /wiki/:path/
+
+defaults:
+  - scope:
+      path: "_wiki"
+      type: wiki
+    values:
+      layout: wiki
+      category: wiki
