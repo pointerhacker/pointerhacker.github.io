@@ -16,6 +16,14 @@ updated: 2026-04-09
 
 ---
 
+## [2026-04-09] ingest | VoxCPM 2（面壁智能开源多语种 TTS 模型）
+
+- 新建: `entities/voxcpm-2.md`
+- 更新: `index.md` 追加 VoxCPM 2 条目
+- 来源: 微信公众号文章（VoxCPM 2 发布介绍）
+
+---
+
 ## [2026-04-09] ingest | OpenViking（字节火山引擎开源项目）
 
 - 新建: `entities/openviking.md`（合并所有子概念，不再拆分独立 concept 条目）

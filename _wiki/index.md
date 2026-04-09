@@ -36,6 +36,7 @@ updated: 2026-04-09
 
 ### 实体（Entities）
 
+- [[entities/voxcpm-2|VoxCPM 2]] — 面壁智能开源多语种高保真 TTS 模型，2B 参数，支持 30 种语言和 9 种中文方言
 - [[entities/openviking|OpenViking]] — 字节火山引擎开源的 AI Agent 上下文管理框架（文件系统范式 + 分层上下文加载 + 目录递归检索）
 - [[entities/claude-managed-agents|Claude Managed Agents]] — Anthropic 2026-04-08 发布的 Agent 托管平台
 - [[entities/gpt|GPT 系列]] — OpenAI GPT 模型系列
