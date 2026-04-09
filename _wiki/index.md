@@ -6,7 +6,7 @@ category: wiki
 nav_exclude: true
 tags: [llm, overview, index]
 description: LLM 知识库的概览和使用指南
-related: []
+related: [openviking, hierarchical-context-loading, recursive-directory-retrieval]
 updated: 2026-04-09
 ---
 
@@ -30,11 +30,24 @@ updated: 2026-04-09
 - **entities/** — 实体页（模型、论文、人物、机构等）
 - **sources/** — 原始资料摘要
 
-## 如何使用
+## 索引
 
-1. 浏览左侧导航树，找到感兴趣的条目
-2. 使用顶部搜索框全文搜索（覆盖博客和知识库）
-3. 点击条目底部的"相关条目"和"反向链接"探索关联
+### 实体（Entities）
+
+- [[entities/openviking|OpenViking]] — 字节火山引擎开源的 AI Agent 上下文管理框架
+- [[entities/claude-managed-agents|Claude Managed Agents]] — Anthropic 2026-04-08 发布的 Agent 托管平台
+- [[entities/gpt|GPT 系列]] — OpenAI GPT 模型系列
+
+### 概念（Concepts）
+
+- [[concepts/hierarchical-context-loading|分层上下文加载]] — LLM 上下文分层管理 L0/L1/L2 范式
+- [[concepts/recursive-directory-retrieval|目录递归检索]] — 改进 RAG 的五步递归检索策略
+- [[concepts/attention-mechanism|注意力机制]] — Transformer 的核心机制
+- [[concepts/flash-attention|Flash Attention]] — 高效注意力计算实现
+- [[concepts/kv-cache|KV Cache]] — LLM 推理优化的关键技术
+- [[concepts/rope|RoPE]] — 旋转位置编码
+- [[concepts/transformer|Transformer]] — 注意力机制架构
+- [[concepts/rlhf|RLHF]] — 基于人类反馈的强化学习
 
 ## 如何贡献新条目
 
@@ -47,8 +60,8 @@ title: 条目标题
 wiki_type: concepts  # concepts | entities | sources
 category: wiki
 tags: [tag1, tag2]
-description: 一行摘要（显示在首页和导航 tooltip）
-related: [other-slug]  # 相关条目的文件名（不含扩展名）
+description: 一行摘要
+related: [other-slug]
 updated: 2026-04-09
 ---
 ```
