@@ -1,32 +1,148 @@
-### 关于
+# pointerhacker.github.io
 
-这是我的个人主页所用的模板，该主题是[Sébastien Saunier](https://raw.github.com/ssaunier/ssaunier.github.io/)在[marcgg](http://marcgg.com/)的基础上改写的。我fork过来后，也稍微做了些修改，如果你觉得不错，可以直接从我这里fork过去，fork过去后还请你把涉及到我个人的一些信息、文章、图片删掉，谢谢。
+个人博客 + LLM 知识库，基于 Jekyll + GitHub Pages 构建。  
+博客由 Obsidian 写作推送；知识库由 Claude Code 协助维护，参考 [Karpathy LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) 模式。
 
-### 主题预览
+**线上地址**：[pointerhacker.github.io](https://pointerhacker.github.io)
 
-[Pointer's Homepage](http://pointerhacker.github.io)。
+---
 
-### 已完成功能
+## 这是什么
 
-1. ~~在线简历~~（未在我的个人博客上展示，因为我有pdf的版本，为避免两处都要维护，所以弃用，如果需要，可以在导航栏上添加[resume](https://pointerhacker.github.io//willard-yuan.github.io/tree/master/resume)）
-2. 添加latex公式支持([效果见博文](http://pointerhacker.github.io/blog/decision-tree.html))
-3. 添加个人时间线([timeline](http://pointerhacker.github.io/timeline/))
+```
+博客 (_posts/)              知识库 (_wiki/)
+  │                            │
+  │  原创深度文章               │  结构化知识图谱
+  │  ・长篇推导                 │  ・概念条目
+  │  ・代码实现                 │  ・实体页面
+  │  ・实验记录                 │  ・论文摘要
+  │                            │
+  └──────── 统一全文搜索 ────────┘
+```
 
-### 安装步骤
+- **博客** (`/blog/`)：自己写的深度文章，Obsidian 写完自动推送
+- **知识库** (`/wiki/`)：LLM 知识图谱，Claude Code 协助维护
+- **搜索** (`/search.html`)：全文搜索，同时覆盖博客和知识库
 
-1. 把模板下载过去，如果你没有用单独的域名的话，把`CNAME`文件删掉，然后顺便把`_posts`里的文章删掉； 
-2. 配置`_config.yml`，比如把title修改成你自己； 
-3. 修改英文页面[default.html](https://pointerhacker.github.io//willard-yuan.github.io/blob/master/_layouts/default.html)，把里面出现的固定的url更改成你的url； 
-4. 修改中文页面[index.html](https://pointerhacker.github.io//willard-yuan.github.io/blob/master/cn/index.html)，主要是中文页面的一些内容； 
-5. **resume**目录是在线简历，[演示效果](http://pointerhacker.github.io/resume/)，这个你在用时，把前面那个[default.html](https://pointerhacker.github.io//willard-yuan.github.io/blob/master/_layouts/default.html)中把latex的简历url换成这个目录的url；  
+---
 
-### 致谢
+## 目录结构
 
-感谢[Sébastien Saunier](https://raw.github.com/ssaunier/ssaunier.github.io/)和[marcgg](http://marcgg.com/)，如果你觉得本主题有改进的地方，欢迎开[issues](https://pointerhacker.github.io//willard-yuan.github.io/issues)或者提交你的PR。
+```
+.
+├── _posts/              ← 博客文章（Obsidian 写，obsidian-git 自动推送）
+├── _wiki/               ← 知识库条目
+│   ├── concepts/        ← 概念（注意力机制、RoPE、KV Cache…）
+│   ├── entities/        ← 实体（模型、论文、人物…）
+│   ├── sources/         ← 原始资料摘要
+│   ├── index.md         ← 知识库概览页
+│   └── log.md           ← 操作日志（append-only）
+├── _layouts/
+│   ├── default.html     ← 博客默认布局
+│   ├── post.html        ← 博客文章布局
+│   ├── wiki.html        ← Wiki 双栏布局
+│   └── wiki-index.html  ← 知识库首页布局
+├── css/
+│   ├── site.css         ← 全局样式
+│   ├── blog.css         ← 博客样式
+│   └── wiki.css         ← 知识库样式
+├── wiki/index.html      ← 知识库入口页
+├── search.html          ← 全文搜索页（覆盖 blog + wiki）
+├── CLAUDE.md            ← Claude Code 操作规范（Wiki Schema）
+└── skill.md             ← Claude Code 提示词手册（即本文档的姐妹文件）
+```
 
-若在使用过程中出现任何问题，请在赞赏留言中留下您的微信，收到消息后我会尽快修复。
+---
 
+## 写博客
 
-<div align="left">
-  <img width="20%" alt="A small reward is highly appreciated! (#^.^#) Thank you~" src="images/payimg/weipayimg.jpg">
-</div>
+用 Obsidian 打开仓库根目录，在 `_posts/` 下新建文件：
+
+```
+_posts/YYYY-MM-DD-标题.md
+```
+
+Front matter 模板：
+
+```yaml
+---
+layout: post
+title: "文章标题"
+categories: LLM
+tags: [tag1, tag2]
+description: 一句话摘要
+---
+```
+
+obsidian-git 插件自动 commit + push，GitHub Pages 约 1-3 分钟构建完成。
+
+---
+
+## 维护知识库
+
+### 让 Claude Code 处理（推荐）
+
+打开 Claude Code，用 `skill.md` 里的提示词触发操作：
+
+```bash
+# 新增一篇论文摘要
+把这篇论文整理成知识库条目：[粘贴摘要]
+
+# 从博客提炼条目
+把博客《一文搞懂KVCache》提炼成 wiki 条目
+
+# 定期健康检查
+对知识库做一次 lint
+
+# 回答问题（会先查 wiki 再答）
+根据知识库，解释 GQA 和 MQA 的区别
+```
+
+详细提示词见 [`skill.md`](./skill.md)，操作规范见 [`CLAUDE.md`](./CLAUDE.md)。
+
+### 手动新建条目
+
+在 `_wiki/concepts/`、`_wiki/entities/` 或 `_wiki/sources/` 下新建 `.md` 文件：
+
+```yaml
+---
+layout: wiki
+title: 条目标题
+wiki_type: concepts        # concepts | entities | sources
+category: wiki
+tags: [tag1, tag2]
+description: 一行摘要（<80字符，显示在首页卡片）
+related: [other-slug]      # 相关页面文件名（不含 .md）
+updated: 2026-04-09
+---
+```
+
+文件名用 kebab-case，例如 `my-concept.md`。
+
+---
+
+## Wiki 条目 URL 规则
+
+| 文件路径 | 访问 URL |
+|----------|----------|
+| `_wiki/concepts/attention-mechanism.md` | `/wiki/concepts/attention-mechanism/` |
+| `_wiki/entities/gpt.md` | `/wiki/entities/gpt/` |
+| `_wiki/sources/attention-is-all-you-need.md` | `/wiki/sources/attention-is-all-you-need/` |
+
+---
+
+## 本地预览
+
+```bash
+bundle exec jekyll serve
+# 打开 http://localhost:4000
+```
+
+无 Ruby 环境可直接 push 后在 GitHub Pages 查看。
+
+---
+
+## 致谢
+
+- 博客主题基于 [Sébastien Saunier](https://github.com/ssaunier) 和 [marcgg](http://marcgg.com/) 的模板
+- 知识库模式参考 [Karpathy LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
