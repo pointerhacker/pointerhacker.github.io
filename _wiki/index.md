@@ -50,6 +50,8 @@ updated: 2026-04-09
 - [[concepts/transformer|Transformer]] — 注意力机制架构
 - [[concepts/rlhf|RLHF]] — 基于人类反馈的强化学习
 
+- [[entities/agentrun|AgentRun]] — AIO Sandbox 浏览器自动化平台，支持 Cookie 持久化、VNC 人机协作
+
 ## 如何贡献新条目
 
 在 `_wiki/concepts/`、`_wiki/entities/` 或 `_wiki/sources/` 下新建 Markdown 文件，使用以下 front matter：

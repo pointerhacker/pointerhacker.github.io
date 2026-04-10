@@ -71,3 +71,8 @@ updated: 2026-04-09
 ### Sources
 - [ ] "Scaling Laws for Neural Language Models" 摘要
 - [ ] nanoGPT 代码分析
+
+## [2026-04-10] ingest | AgentRun 实践指南：All-In-One Sandbox
+
+- 新建: `entities/agentrun.md`
+- 更新 related: 无
