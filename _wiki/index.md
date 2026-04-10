@@ -51,6 +51,7 @@ updated: 2026-04-09
 - [[concepts/rlhf|RLHF]] — 基于人类反馈的强化学习
 
 - [[entities/agentrun|AgentRun]] — AIO Sandbox 浏览器自动化平台，支持 Cookie 持久化、VNC 人机协作
+- [[entities/multica|Multica]] — 多人 Agent 协作平台，4K Stars，Agent 即队友，看板管理+技能沉淀
 
 ## 如何贡献新条目
 
