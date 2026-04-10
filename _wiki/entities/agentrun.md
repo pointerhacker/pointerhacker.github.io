@@ -3,142 +3,125 @@ layout: wiki
 title: AgentRun
 wiki_type: entities
 category: wiki
-tags: [浏览器自动化, Sandbox, Puppeteer, AI Agent, Cookie持久化, VNC]
-description: AgentRun 平台：AIO Sandbox 实现浏览器自动化，支持 Cookie 持久化、VNC 人机协作、多步骤任务状态保持。
+tags: [Agent平台, Sandbox, Serverless, 模型治理, MCP, 企业级AI]
+description: AgentRun 是企业级一站式 Agentic AI 基础设施平台，提供 Agent 运行时管理、多类型沙箱、模型治理、工具管理、凭证安全等能力。
 related: [puppeteer, browser-automation]
 updated: 2026-04-10
 ---
 
 # AgentRun
 
-AgentRun 实践指南：Agent 的宝藏工具——All-In-One Sandbox
+> 企业级一站式 Agentic AI 基础设施平台
 
-来源：[公众号 AgentRun - Cloud Native](https://mp.weixin.qq.com/s/BgrcbJnD_Q27xQT4cLBtfg)
+来源：[AgentRun 官方文档](https://docs.agent.run/)
 
-## 核心产品：AIO Sandbox
+## 产品定位
 
-All-In-One Browser Sandbox，为 AI Agent 提供浏览器自动化能力。核心解决传统浏览器自动化需要登录、验证码、多步骤状态保持的问题。
+AgentRun 是以**高代码为核心，开放生态、灵活组装**的一站式 Agentic AI 基础设施平台，为企业级 Agentic 应用提供**开发、部署与运维全生命周期管理**。
 
-## 核心设计理念
+核心价值：
+- **Serverless 架构**：强隔离运行时 + 弹性伸缩
+- **开放生态**：深度集成 LangChain、AgentScope、LangGraph、CrewAI 等主流框架
+- **数据不出域**：私有网络部署，数据物理隔离
 
-### 人机协作，而非完全自动化
+## 核心模块
 
-承认 AI 无法处理验证码、滑块、短信等环节，采用：
-- **可观测性优先**：通过 VNC 让执行过程完全透明
-- **人机协作**：人工介入搞定验证后，无缝衔接自动化
-- **状态持久化**：浏览器会话和 Cookie 可跨步骤保存和恢复
+### 1. AgentRuntime — 智能体运行时
 
-## 核心技术点
+Agent 运行时的生命周期管理单元。
 
-### 1. 必须用 connect()，别用 launch()
+**部署方式**：上传代码包（本地/OSS）、在线编码、自定义容器镜像
 
-```javascript
-// 错误：启动新浏览器 (1-3秒)
-const browser = await puppeteer.launch();
+**运行时特性**：
+- 多语言：Python 3.10/3.12、Node.js 18/20、Java 8/11/17 等
+- 多开发模式：无代码（AI Studio）、低代码（快速创建）、高代码（代码创建）
+- 会话亲和 + Serverless 弹性 + 多实例并发
+- 版本管理 + Endpoint 灰度发布
 
-// 正确：连接已运行的浏览器 (<100ms)
-const browser = await puppeteer.connect({
-  browserWSEndpoint: 'ws://localhost:5000/ws/automation'
-});
+**集成方式**：SDK、API（OpenAI Chat Completions 兼容）、UI、MCP
+
+### 2. Sandbox — 沙箱环境
+
+为代码执行和浏览器操作提供安全、高性能的 Serverless 沙箱。
+
+**沙箱类型**：
+- **Code Interpreter**：Python/Shell 代码执行，完整文件系统操作
+- **Browser Use**：浏览器自动化
+- **All-in-One**：全功能沙箱（浏览器 + 代码执行，适合复杂多步骤任务）
+- **……**（更多类型持续更新）
+
+**隔离与弹性**：
+- MicroVM 安全容器，多级隔离
+- 支持缩容到 0，按请求弹性调度
+- 毫秒级唤醒，万级实例/分钟极速交付
+
+**集成方式**：SDK 调用、MCP 工具方式
+
+### 3. Model — 模型管理与治理
+
+统一的大模型接入、管理与治理中心。
+
+**模型来源**：
+- 第三方模型：通义千问、DeepSeek 等
+- 开源托管模型：vLLM / SGLang / Ollama / LMDeploy 等框架
+- 向量模型
+
+**模型治理能力**：
+- 多模型负载代理 + Fallback + 并发控制
+- 超时与缓存
+- 内容安全 + Token 限流 + 成本监控
+- Serverless GPU 弹性交付
+
+### 4. ToolSet — 工具管理
+
+统一的工具定义、调用和治理中心。
+
+**协议支持**：MCP + Function Call 双协议
+
+**Tool Hub 生态**：
+- 提供大量常用工具，一键接入
+- 支持自定义工具发布与分享
+
+**智能扩展**（规划中）：Hook 注入、语义分析、智能路由、AI 自动生成工具定义
+
+### 5. Credential — 凭证管理
+
+安全集中管理 Agent / Sandbox / LLM / 工具访问所需的凭证。
+
+**支持类型**：API Key、JWT、Basic Auth、AK/SK 等
+
+**安全特性**：
+- 动态凭证注入：运行时自动注入，无需硬编码
+- 启用/禁用控制：一键禁用疑似泄露的凭证
+
+## SDK 架构
+
+```
+┌─────────────────────────────────────┐
+│         集成模块 + 工具类             │  ← 上层：框架适配器、配置、日志
+├─────────────────────────────────────┤
+│         资源对象层                   │  ← AgentRuntime、Model、Sandbox 等
+├─────────────────────────────────────┤
+│   Control API   │   Data API        │  ← 中层：资源管理 / 运行交互
+└─────────────────────────────────────┘
 ```
 
-原因：浏览器在容器启动时就已运行，`launch()` 会启动第二个浏览器浪费资源。
+## 适用场景
 
-### 2. 必须用 disconnect()，别用 close()
-
-| 方法 | 效果 |
+| 场景 | 说明 |
 |------|------|
-| `browser.close()` | 关闭所有页面，终止进程，状态全丢 |
-| `browser.disconnect()` | 仅断开 Puppeteer 连接，浏览器继续运行，状态保留 |
+| 智能客服 | 企业级对话 Agent，多模型 Fallback |
+| 数据分析助手 | Code Interpreter 沙箱执行 Python 分析 |
+| 代码生成工具 | 代码解释器 + 浏览器自动化组合 |
+| 网页自动化机器人 | Browser Use / AIO Sandbox |
+| 合规敏感场景 | 数据不出域 + 私有网络部署 |
 
-### 3. Cookie 持久化是王道
+## 技术指标
 
-登录状态的本质是 Cookie，没有持久化会导致：Sandbox 重建后状态全丢、Cookie 过期后需重新登录。
-
-```javascript
-// 保存 Cookie
-const cookies = await page.cookies();
-fs.writeFileSync('cookies.json', JSON.stringify(cookies));
-
-// 加载 Cookie
-const cookies = JSON.parse(fs.readFileSync('cookies.json'));
-await page.setCookie(...cookies);
-```
-
-### 4. 多步骤任务用文件系统传递状态
-
-```javascript
-// 步骤1：登录 → 保存结果到文件
-fs.writeFileSync('/home/user/data/user.json', JSON.stringify(userData));
-
-// 步骤2：读取文件，继续执行
-const userData = JSON.parse(fs.readFileSync('/home/user/data/user.json'));
-```
-
-## 登录流程拆分
-
-1. 打开登录页 → 人在 VNC 中手动完成
-2. 保存 Cookie → 程序自动保存到文件系统
-3. 执行任务 → 加载 Cookie，恢复登录状态
-
-## 7 条黄金法则
-
-1. 必须用 `puppeteer.connect()`，禁止 `launch()`
-2. 必须用 `browser.disconnect()`，禁止 `close()`
-3. 必须保存数据到 `/home/user/data/` 目录
-4. 登录流程拆分：打开登录页 → 人工登录 → 保存 Cookie → 执行任务
-5. Cookie 先访问域名再设置，避免跨域问题
-6. 多步骤任务用文件系统传递状态，别用全局变量
-7. 重要操作必须加错误处理，别让错误静默失败
-
-## 系统提示词设计
-
-### 基础模板
-
-```
-你是 AgentRun AIO Sandbox 的代码生成助手。
-【环境信息】
-- 浏览器：Chromium (已预启动)
-- 连接端点：ws://localhost:5000/ws/automation
-- 文件系统：/home/user/data/ (持久化目录)
-- 超时限制：单次执行 300 秒
-【代码规范】
-1. 连接浏览器：puppeteer.connect({ browserWSEndpoint: '...' })
-2. 结束会话：browser.disconnect()
-3. 文件读写：使用 /home/user/data/ 目录
-4. 错误处理：必须用 try-catch 包裹核心操作
-【输出要求】
-- 生成完整的 JavaScript 代码
-- 包含必要的错误处理
-- 关键步骤用 console.log() 记录
-- 重要结果保存到文件系统
-```
-
-## 进阶技巧
-
-### 性能优化：禁用不必要的资源
-
-```javascript
-await page.setRequestInterception(true);
-page.on('request', (req) => {
-  if (['image', 'stylesheet', 'font', 'media'].includes(req.resourceType())) {
-    req.abort();
-  } else {
-    req.continue();
-  }
-});
-```
-
-### 安全注意事项
-
-- Cookie 文件必须加入 `.gitignore`
-- 用户输入需白名单验证，防止代码注入
-
-## 技术收益
-
-1. **启动延迟低**：从多个 sandbox 优化为一个，降低至少 50% 启动时间
-2. **状态保持轻量**：用本地文件系统实现状态保持，符合最佳实践
-3. **VNC 人工介入**：有效解决验证码等自动化卡点
+- **弹性**：缩容到 0，毫秒级唤醒，万级实例/分钟交付
+- **隔离**：MicroVM 安全容器，多级隔离
+- **集成**：LangChain / AgentScope / LangGraph / CrewAI 原生支持
+- **协议**：OpenAI Chat Completions 兼容、MCP 协议
 
 ## 参考资料
 
