@@ -47,6 +47,12 @@ updated: 2026-04-09
 
 ---
 
+## [2026-04-12] ingest | MemPO（Self-Memory Policy Optimization）
+
+- 新建: `entities/li-2026-mempo.md`
+- 更新: `index.md` 追加 MemPO 条目
+- 来源: arXiv:2603.00680，朝进阅读后主动记录
+
 ## 待补充条目
 
 ### Concepts
