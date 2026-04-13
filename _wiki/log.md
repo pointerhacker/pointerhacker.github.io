@@ -47,6 +47,14 @@ updated: 2026-04-09
 
 ---
 
+## [2026-04-13] ingest | Efficient Exploration at Scale（Google DeepMind Efficient Agent Team）
+
+- 新建: `entities/efficient-exploration-at-scale.md`
+- 更新: `index.md` 追加 Efficient Exploration at Scale 条目
+- 来源: 朝进提供，arXiv:2603.17378
+
+---
+
 ## [2026-04-12] ingest | MemPO（Self-Memory Policy Optimization）
 
 - 新建: `entities/li-2026-mempo.md`
