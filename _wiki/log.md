@@ -90,3 +90,11 @@ updated: 2026-04-09
 
 - 新建: `entities/agentrun.md`
 - 更新 related: 无
+
+---
+
+## [2026-04-23] ingest | PaddleOCR-VL（百度开源文档解析 VLM）
+
+- 新建: `entities/paddleocr-vl.md`
+- 更新: `index.md` 追加 PaddleOCR-VL 条目
+- 来源: GitHub README + 官方文档
