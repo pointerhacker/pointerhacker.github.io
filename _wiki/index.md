@@ -72,3 +72,10 @@ related: [other-slug]
 updated: 2026-04-09
 ---
 ```
+
+## [sources] DeepSeek V4 论文深度解读（花叔）
+
+- 2026-04-25 · 花叔 Twitter 超长解读，58 页论文逐节分析
+- 核心：mHC / CSA+HCA / Muoner，三大架构改动让 671B → 1.6T
+- 亮点：Specialist + OPD 后训练范式，可能是比 MoE 更深刻的变化
+- 评测：数学/编程顶尖，Agent/品味任务偏弱

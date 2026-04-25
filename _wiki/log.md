@@ -98,3 +98,8 @@ updated: 2026-04-09
 - 新建: `entities/paddleocr-vl.md`
 - 更新: `index.md` 追加 PaddleOCR-VL 条目
 - 来源: GitHub README + 官方文档
+
+## [2026-04-25] ingest | DeepSeek V4 论文深度解读（花叔）
+
+- 新建: `sources/deepseek-v4-huashu-2026.md`
+- 更新 related: deepseek-v3, mhc, mixture-of-experts
