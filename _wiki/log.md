@@ -103,3 +103,8 @@ updated: 2026-04-09
 
 - 新建: `sources/deepseek-v4-huashu-2026.md`
 - 更新 related: deepseek-v3, mhc, mixture-of-experts
+
+## [2026-04-25] ingest | AutoMetrics (Ryan et al., 2026)
+
+- 新建: `entities/autometrics-ryan-2026.md`
+- 更新 related: llm-evaluation, metric-learning

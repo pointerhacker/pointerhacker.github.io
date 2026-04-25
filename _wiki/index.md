@@ -79,3 +79,9 @@ updated: 2026-04-09
 - 核心：mHC / CSA+HCA / Muoner，三大架构改动让 671B → 1.6T
 - 亮点：Specialist + OPD 后训练范式，可能是比 MoE 更深刻的变化
 - 评测：数学/编程顶尖，Agent/品味任务偏弱
+
+## [entities] AutoMetrics (Ryan et al., 2026)
+
+- 2026-04-25 · ICLR 2026 · Stanford + AmEx
+- 核心：从 <100 稀疏人类反馈自动合成可解释评估指标，Kendall 相关性比 LLM-as-a-Judge 提升 33.4%
+- 方法：Generate + Retrieve (MetricBank) + PLS Regress + Report 四步流程
