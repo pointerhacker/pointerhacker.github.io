@@ -108,3 +108,8 @@ updated: 2026-04-09
 
 - 新建: `entities/autometrics-ryan-2026.md`
 - 更新 related: llm-evaluation, metric-learning
+
+## [2026-06-27] ingest | CoEval（零样本抗污染 LLM 自动化评测框架）
+
+- 新建: `entities/coeval.md`
+- 更新 related: 无
