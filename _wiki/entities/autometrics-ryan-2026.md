@@ -5,7 +5,7 @@ wiki_type: entities
 category: wiki
 tags: [LLM评估, LLM-as-a-Judge, 度量学习, ICLR2026]
 description: AutoMetrics — 从稀疏人类反馈中自动合成评估指标，在 5 个任务上比 LLM-as-a-Judge 的 Kendall 相关性提升最高 33.4%
-related: [llm-evaluation, metric-learning]
+related: [llm-evaluation, metric-learning, zeng-2026-benchpress]
 updated: 2026-04-25
 ---
 

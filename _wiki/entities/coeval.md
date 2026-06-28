@@ -5,7 +5,7 @@ wiki_type: entities
 category: wiki
 tags: [LLM Evaluation, LLM-as-Judge, Benchmark, Zero-shot, Data Contamination, arXiv]
 description: 无需标注数据与可信基准、用跨厂商裁判团给 LLM 自定义任务能力排名的自动化评测框架
-related: []
+related: [zeng-2026-benchpress]
 updated: 2026-06-27
 ---
 

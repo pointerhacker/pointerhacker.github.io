@@ -113,3 +113,8 @@ updated: 2026-04-09
 
 - 新建: `entities/coeval.md`
 - 更新 related: 无
+
+## [2026-06-28] ingest | You Don't Need to Run Every Eval (BENCHPRESS)
+
+- 新建: `entities/zeng-2026-benchpress.md`
+- 更新 related: coeval.md, autometrics-ryan-2026.md

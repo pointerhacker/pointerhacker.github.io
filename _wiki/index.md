@@ -56,6 +56,7 @@ updated: 2026-04-09
 - [[entities/li-2026-mempo|MemPO]] — 让 LLM Agent 自主管理记忆的 RL 算法，通过记忆级 dense reward 解决长程任务信用分配问题
 - [[entities/coeval|CoEval]] — 零样本、抗污染的 LLM 自动化评测框架，用跨厂商裁判团为自定义任务排名
 - [[entities/efficient-exploration-at-scale|Efficient Exploration at Scale]] — Google DeepMind 提出在线学习算法，将 RLHF 数据效率提升 10 倍以上（<20K 标签匹配 200K 标签效果）
+- [[entities/zeng-2026-benchpress|You Don't Need to Run Every Eval]] — 微软证明基准分矩阵近似 rank-2，BENCHPRESS 仅用 5 项测试补全全部成绩单（MedAE ~4.6）
 
 ## 如何贡献新条目
 
